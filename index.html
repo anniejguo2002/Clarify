@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clarify — every page, rewritten for the way you read</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+  <!-- ===================== HOME / INPUT VIEW ===================== -->
+  <section id="home-view" class="view">
+    <div class="home-wrap">
+      <div class="brand">
+        <span class="brand-mark">◐</span> Clarify
+      </div>
+      <h1 class="home-title">Paste something you want to read.</h1>
+      <p class="home-sub">
+        Clarify keeps every fact, name and number — it just changes how the
+        words are written and shown, so reading takes less effort.
+      </p>
+
+      <form id="input-form" class="input-card">
+        <textarea
+          id="input-text"
+          placeholder="Paste a webpage URL, or paste the article text itself…"
+          rows="5"
+          autofocus
+        ></textarea>
+        <div class="input-row">
+          <span class="input-hint">Works with a link or plain text.</span>
+          <button type="submit" id="submit-btn" class="btn-primary">
+            Make it easier to read
+          </button>
+        </div>
+      </form>
+
+      <p id="home-error" class="home-error" hidden></p>
+
+      <p class="home-footnote">Not a summarizer — nothing is left out.</p>
+    </div>
+  </section>
+
+  <!-- ===================== LOADING VIEW ===================== -->
+  <section id="loading-view" class="view" hidden>
+    <div class="loading-wrap">
+      <div class="spinner" aria-hidden="true"></div>
+      <p id="loading-text">Reading and rewriting…</p>
+    </div>
+  </section>
+
+  <!-- ===================== READER VIEW ===================== -->
+  <section id="reader-view" class="view" hidden>
+    <header class="reader-topbar">
+      <button id="back-btn" class="btn-ghost" type="button">&larr; New text</button>
+      <div class="brand brand--small"><span class="brand-mark">◐</span> Clarify</div>
+    </header>
+
+    <div class="controls" role="group" aria-label="Reading controls">
+      <div class="control-group" role="tablist" aria-label="Reading mode">
+        <span class="control-label">Reading mode</span>
+        <div class="segmented" id="mode-toggle">
+          <button type="button" class="segmented-btn" data-mode="original">Original</button>
+          <button type="button" class="segmented-btn is-active" data-mode="clear">Clear</button>
+          <button type="button" class="segmented-btn" data-mode="simpler">Simpler</button>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <span class="control-label" id="text-size-label">Text size</span>
+        <input type="range" id="text-size" min="0" max="4" step="1" value="1" aria-labelledby="text-size-label">
+      </div>
+
+      <div class="control-group" role="tablist" aria-label="Line spacing">
+        <span class="control-label">Line spacing</span>
+        <div class="segmented" id="spacing-toggle">
+          <button type="button" class="segmented-btn is-active" data-spacing="normal">Normal</button>
+          <button type="button" class="segmented-btn" data-spacing="wide">Wide</button>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <span class="control-label" id="focus-label">Focus mode</span>
+        <button type="button" id="focus-toggle" class="switch" role="switch" aria-checked="false" aria-labelledby="focus-label">
+          <span class="switch-knob"></span>
+        </button>
+      </div>
+    </div>
+
+    <main id="article" class="article spacing-normal text-size-1">
+      <p class="article-source" id="article-source" hidden></p>
+      <h1 id="article-title" class="article-title"></h1>
+      <div id="article-body" class="article-body"></div>
+    </main>
+  </section>
+
+  <script src="/app.js"></script>
+</body>
+</html>
