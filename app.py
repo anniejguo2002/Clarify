@@ -31,7 +31,15 @@ from readability import Document
 import requests
 from openai import OpenAI
 
-app = Flask(__name__, static_folder="static", static_url_path="")
+# Frontend files (index.html/app.js/style.css) live at the project root
+# alongside app.py rather than in a "static/" subfolder. This avoids a
+# real deployment failure mode: manual file uploads (e.g. via GitHub's
+# web upload UI) can silently drop subfolder structure, which would make
+# a static_folder="static" reference 404. Serving each file via its own
+# explicit route below keeps things working regardless of upload method,
+# without exposing app.py/requirements.txt/README.md over HTTP.
+app = Flask(__name__)
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 OPENAI_MODEL = os.environ.get("CLARIFY_MODEL", "gpt-4o-mini")
 _client = None
@@ -162,7 +170,17 @@ def call_llm(title: str, body_text: str) -> dict:
 
 @app.route("/")
 def index():
-    return send_from_directory(app.static_folder, "index.html")
+    return send_from_directory(ROOT_DIR, "index.html")
+
+
+@app.route("/app.js")
+def app_js():
+    return send_from_directory(ROOT_DIR, "app.js")
+
+
+@app.route("/style.css")
+def style_css():
+    return send_from_directory(ROOT_DIR, "style.css")
 
 
 @app.route("/api/transform", methods=["POST"])
